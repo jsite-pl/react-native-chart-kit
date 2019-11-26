@@ -352,6 +352,8 @@ const data = [
 | paddingLeft | string  | left padding of the pie chart                                                               |
 | absolute    | boolean | shows the values as absolute numbers                                                        |
 | hasLegend   | boolean | Defaults to `true`, set it to `false` to remove the legend                                  |
+| strokeColor | string  | color of stroke at every pie chart element                                                  |
+| strokeWidth | Number  | Defines the base stroke width in a pie chart element                                        |
 
 ## Contribution graph (heatmap)
 
