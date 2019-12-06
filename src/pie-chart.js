@@ -37,19 +37,9 @@ class PieChart extends AbstractChart {
           value = Math.round((100 / total) * c.item[this.props.accessor]) + "%";
         }
       }
-
       return (
         <G key={Math.random()}>
-          {this.props.chartConfig.strokeColor ? (
-            <Path
-              d={c.sector.path.print()}
-              fill={c.item.color}
-              stroke={this.props.chartConfig.strokeColor}
-              strokeWidth={this.props.chartConfig.strokeWidth || 3}
-            />
-          ) : (
-            <Path d={c.sector.path.print()} fill={c.item.color} />
-          )}
+          <Path d={c.sector.path.print()} fill={c.item.color}/>
           {hasLegend ? (
             <Rect
               width="16px"
@@ -82,6 +72,22 @@ class PieChart extends AbstractChart {
         </G>
       );
     });
+    let strokes = null;
+    if (this.props.chartConfig.strokeColor) {
+      strokes = chart.curves.map((c, i) => {
+        const pathD = c.sector.path.print().split(' ');
+        const line = `M ${pathD[1]} ${pathD[2]} L 0 0 Z`;
+        return (
+          <G key={Math.random()}>
+          <Path
+          d={line}
+          stroke={this.props.chartConfig.strokeColor}
+          strokeWidth={this.props.chartConfig.strokeWidth || 3}
+          />
+          </G>
+        );
+      });
+    }
     return (
       <View
         style={{
@@ -114,6 +120,7 @@ class PieChart extends AbstractChart {
             y={this.props.height / 2}
           >
             {slices}
+            {strokes}
           </G>
         </Svg>
       </View>
